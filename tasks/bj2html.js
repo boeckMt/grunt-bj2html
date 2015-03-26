@@ -8,6 +8,10 @@
 
 'use strict';
 
+var Fs = require('fs'),
+    Path = require('path');
+
+
 module.exports = function (grunt) {
 
   // Please see the Grunt documentation for more information regarding task
@@ -31,9 +35,6 @@ module.exports = function (grunt) {
         var template = options.templateString || file.dest,
         destination = options.destFile || file.dest,
         source = options.srcFiles || file.orig.src;
-
-        //console.log('destination:' + destination)
-        //console.log('source:' + source)
 
         source.forEach(function(filepath) {
             // Warn on and remove invalid source files.
@@ -69,6 +70,7 @@ module.exports = function (grunt) {
             });
 
             //grunt.file.write(destination, templateContent);
+            //injectScripts(destination, options.regex, templateContent)
 
         });
 
@@ -76,88 +78,12 @@ module.exports = function (grunt) {
 
 
     //Inject all gathered files per destination, template and starttag:
-    console.log(filesToInject)
     for(var i = 0; i < filesToInject.length; i++){
-
-        //var header = grunt.file.read('header.php').split('\n');
-
         var obj = filesToInject[i];
-        console.log(obj.src, obj.dest, obj.template)
+        //console.log(obj.src, obj.dest, obj.template)
         //grunt.file.write(obj.path, obj.template);
+        injectScripts(obj.dest, options.regex, obj.template)
     }
-
-
-/*
-    _.forIn(filesToInject, function (templates, destination) {
-        _.forIn(templates, function (files, template) {
-            // Remove possible duplicates:
-            files = _.uniq(files);
-
-            files.forEach(function (obj) {
-                // Get start and end tag for each file:
-                obj.starttag = getTag(options.starttag, obj.key);
-                obj.endtag = getTag(options.endtag, obj.key);
-
-                // Fix filename (remove ignorepaths and such):
-                var file = obj.path;
-                if (options.relative) {
-                    var base =  path.dirname(destination);
-                    file = path.relative(base, file);
-                }
-                file = unixify(file);
-                file = makeMinifiedIfNeeded(options.min, file);
-                if (options.ignorePath || obj.ignore) {
-                    file = removeBasePath(toArray(options.ignorePath).concat(toArray(obj.ignore)), file);
-                }
-                if (options.addRootSlash) {
-                    file = addRootSlash(file);
-                } else {
-                    file = removeRootSlash(file);
-                }
-                obj.file = file;
-            });
-
-            // Read template:
-            var templateContent = options.templateString || grunt.file.read(template),
-            templateOriginal = templateContent;
-
-            // Inject per start tag:
-            _.forIn(_.groupBy(files, 'starttag'), function (sources, starttag) {
-                var endtag = sources[0].endtag,
-                key = sources[0].key;
-
-                // Transform to injection content:
-                sources.forEach(function (obj, i) {
-                    obj.transformed = options.transform(obj.file, i, sources.length);
-                });
-
-                // Sort files if needed:
-                if (typeof options.sort === 'function') {
-                    sources.sort(function (a, b) {
-                        return options.sort(a.file, b.file);
-                    });
-                }
-
-                // Do the injection:
-                var re = getInjectorTagsRegExp(starttag, endtag);
-                templateContent = templateContent.replace(re, function (match, indent, starttag, content, endtag) {
-                    grunt.log.writeln('Injecting ' + key.green + ' files ' + ('(' + sources.length + ' files)').grey);
-                    return indent + starttag + getIndentedTransformations(sources, indent, options.lineEnding) + endtag;
-                });
-            });
-
-            // Write the destination file.
-            if (templateContent !== templateOriginal || !grunt.file.exists(destination)) {
-                grunt.file.write(destination, templateContent);
-            } else {
-                grunt.log.ok('Nothing changed');
-            }
-        });
-    });
-
-*/
-
-
 
 
   });
@@ -174,4 +100,25 @@ function escapeForRegExp (str) {
 
 function getTag (tag, ext) {
     return tag.replace(new RegExp( escapeForRegExp('{{ext}}'), 'g'), ext);
+}
+
+function injectScripts(filePath, regex, json2html) {
+
+    var contents = String(Fs.readFileSync(filePath));
+    var fileExt = Path.extname(filePath).substr(1);
+    //var fileType = fileTypes['json'] || fileTypes['default'];
+    var reg = regex;
+    console.log(reg)
+    var repCont = '<!-- bj2html:json -->\n' + json2html + '\n<!-- endbj2html -->';
+    var returnType = /\r\n/.test(contents) ? '\r\n' : '\n';
+
+    var newContents = contents.replace(
+        reg,
+        repCont
+    );
+
+
+    if (contents !== newContents) {
+        Fs.writeFileSync(filePath, newContents);
+    }
 }

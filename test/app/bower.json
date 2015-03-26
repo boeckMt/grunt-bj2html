@@ -1,7 +1,7 @@
 {
     "name": "my-project",
     "version": "1.0.0",
-    "title":"my title",
+    "title":"Hallo",
     "description": "test bower.json",
     "authors": ["sepp", "hans"],
     "main": "",

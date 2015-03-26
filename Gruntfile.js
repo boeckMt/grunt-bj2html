@@ -55,7 +55,8 @@ module.exports = function (grunt) {
           options: {
               starttag: '<!-- bj2html:json -->',
               endtag: '<!-- endbj2html -->',
-              bowerPath: 'test/app/bower.json'
+              bowerPath: 'test/app/bower.json',
+              regex: /(([ \t]*)<!--\s*bj2html:*(\S*)\s*-->)(\n|\r|.)*?(<!--\s*endbj2html\s*-->)/gi
           },
           files: {
              'test/app/index.html': ['test/app/bower.json']
@@ -77,6 +78,8 @@ module.exports = function (grunt) {
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
   grunt.registerTask('test', ['clean', 'bj2html', 'nodeunit']);
+
+  grunt.registerTask('inject', ['bj2html']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
