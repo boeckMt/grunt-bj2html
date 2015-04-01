@@ -50,7 +50,7 @@ exports.bj2html = {
     my_options: function (test) {
         test.expect(1);
 
-        var actual = grunt.file.read('test/app/index.html');
+        var actual = grunt.file.read('tmp/index.html');
         var expected = grunt.file.read('test/expected/my_options.html');
         test.equal(actual, expected, 'should be the same file.');
 

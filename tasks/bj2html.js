@@ -7,10 +7,7 @@
  */
 
 'use strict';
-
-var Fs = require('fs'),
-    Path = require('path');
-
+var helpers = require('../lib/helpers.js');
 
 module.exports = function (grunt) {
 
@@ -49,7 +46,7 @@ module.exports = function (grunt) {
                 version: bowerData.version,
                 description: bowerData.description,
                 author: bowerData.authors.join()
-            }
+            };
             var template = '<title>' + header.title + '</title>\n' +
             '<meta name="title" content="' + header.title + '">\n' +
             '<meta name="version" content="' + header.version + '">\n' +
@@ -64,7 +61,7 @@ module.exports = function (grunt) {
             var templateContent = template,
             templateOriginal = templateContent;
 
-            var re = getInjectorTagsRegExp(options.starttag, options.endtag);
+            var re = helpers.getInjectorTagsRegExp(options.starttag, options.endtag);
             templateContent = templateContent.replace(re, function (match, indent, starttag, content, endtag) {
                 return indent + starttag + options.lineEnding + indent + endtag;
             });
@@ -82,43 +79,10 @@ module.exports = function (grunt) {
         var obj = filesToInject[i];
         //console.log(obj.src, obj.dest, obj.template)
         //grunt.file.write(obj.path, obj.template);
-        injectScripts(obj.dest, options.regex, obj.template)
+        helpers.injectScripts(obj.dest, options.regex, obj.template);
     }
 
 
   });
 
 };
-
-function getInjectorTagsRegExp (starttag, endtag) {
-    return new RegExp('([\t ]*)(' + escapeForRegExp(starttag) + ')(\\n|\\r|.)*?(' + escapeForRegExp(endtag) + ')', 'gi');
-}
-
-function escapeForRegExp (str) {
-    return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-}
-
-function getTag (tag, ext) {
-    return tag.replace(new RegExp( escapeForRegExp('{{ext}}'), 'g'), ext);
-}
-
-function injectScripts(filePath, regex, json2html) {
-
-    var contents = String(Fs.readFileSync(filePath));
-    var fileExt = Path.extname(filePath).substr(1);
-    //var fileType = fileTypes['json'] || fileTypes['default'];
-    var reg = regex;
-    console.log(reg)
-    var repCont = '<!-- bj2html:json -->\n' + json2html + '\n<!-- endbj2html -->';
-    var returnType = /\r\n/.test(contents) ? '\r\n' : '\n';
-
-    var newContents = contents.replace(
-        reg,
-        repCont
-    );
-
-
-    if (contents !== newContents) {
-        Fs.writeFileSync(filePath, newContents);
-    }
-}

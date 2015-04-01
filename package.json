@@ -2,7 +2,7 @@
   "name": "bj2html",
   "version": "0.0.1",
   "description": "parse bower.json and update html header",
-  "repository": "",
+  "repository": "https://github.com/boeckMt/myGruntPlugin.git",
   "author": {
     "name": "boeckMt",
     "email": "bbmatdd@gmail.com",
@@ -17,10 +17,11 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "grunt": "~0.4.2",
     "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-nodeunit": "~0.3.0",
-    "grunt": "~0.4.2",
     "jshint-stylish": "~0.1.5",
     "load-grunt-tasks": "~0.3.0"
   },

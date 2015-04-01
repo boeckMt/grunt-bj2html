@@ -2,6 +2,10 @@
 
 > parse bower.json and update html header
 
+inspired by:
+* https://github.com/taptapship/wiredep
+* https://github.com/klei/grunt-injector
+
 ## Getting Started
 This plugin requires Grunt.
 

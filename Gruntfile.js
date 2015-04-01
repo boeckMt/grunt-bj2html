@@ -26,6 +26,17 @@ module.exports = function (grunt) {
       }
     },
 
+    //copy index.html to tmp for tests
+    copy: {
+      test: {
+          expand: true,
+          cwd: 'test/app/',
+          src: '*.html',
+          dest: 'tmp/',
+          filter: 'isFile'
+      }
+    },
+
     // Before generating any new files, remove any previously-created files.
     clean: {
       tests: ['tmp']
@@ -33,36 +44,26 @@ module.exports = function (grunt) {
 
     // Configuration to be run (and then tested).
     bj2html: {
-        /*
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
-      },
-      */
       my_options: {
-          options: {
-              starttag: '<!-- bj2html:json -->',
-              endtag: '<!-- endbj2html -->',
-              bowerPath: 'test/app/bower.json',
-              regex: /(([ \t]*)<!--\s*bj2html:*(\S*)\s*-->)(\n|\r|.)*?(<!--\s*endbj2html\s*-->)/gi
-          },
-          files: {
-             'test/app/index.html': ['test/app/bower.json']
-          }
-      }
+        options: {
+          starttag: '<!-- bj2html:json -->',
+          endtag: '<!-- endbj2html -->',
+          bowerPath: 'test/app/bower.json',
+          regex: /(([ \t]*)<!--\s*bj2html:*(\S*)\s*-->)(\n|\r|.)*?(<!--\s*endbj2html\s*-->)/gi
+          /*
+          regex:
+          group: /(([ \t]*)<!--\s*bj2html:*(\S*)\s*-->)
+          group: (\n|\r|.)*?
+          group: (<!--\s*endbj2html\s*-->)
+          modifiers: /gi
 
+
+          */
+        },
+        files: {
+          'tmp/index.html': ['test/app/bower.json']
+        }
+      }
     },
 
     // Unit tests.
@@ -77,9 +78,13 @@ module.exports = function (grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'bj2html', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'copy:test', 'bj2html', 'nodeunit']);
 
+  /*
   grunt.registerTask('inject', ['bj2html']);
+
+  grunt.registerTask('co', ['copy:test']);
+  */
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
