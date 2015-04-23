@@ -1,5 +1,5 @@
 {
-  "name": "bj2html",
+  "name": "grunt-bj2html",
   "version": "0.0.1",
   "description": "parse bower.json and update html header",
   "repository": "https://github.com/boeckMt/myGruntPlugin.git",
