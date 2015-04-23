@@ -12,7 +12,8 @@ This plugin requires Grunt.
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install bj2html --save-dev
+npm install grunt-bj2html --save-dev
+or npm install git://github.com/boeckMt/grunt-bj2html.git --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -41,48 +42,59 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.starttag
 Type: `String`
-Default value: `',  '`
+Default value: `'<!-- bj2html:json -->'`
 
-A string value that is used to do something with whatever.
+A string value that is used as start-tag.
 
-#### options.punctuation
+#### options.endtag
 Type: `String`
-Default value: `'.'`
+Default value: `'<!-- endbj2html -->'`
 
-A string value that is used to do something else with whatever else.
+A string value that is used as end-tag.
+
+#### options.bowerPath
+Type: `String`
+Default value: `'./test/app/bower.json'`
+
+A string value that is used as path to your bower.json.
+
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+So if the file `test/app/index.html` has the content `<!-- bj2html:json --> <!-- endbj2html -->`, it will  create a temp-file and populate it with `title`, `version`, `description` and `author` from the bower.json file.
 
 ```js
 grunt.initConfig({
   bj2html: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      my_options: {
+        options: {},
+        files: {
+          'tmp/index.html': ['test/app/bower.json']
+        }
+      }
     },
-  },
 })
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
 ```js
 grunt.initConfig({
   bj2html: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      my_options: {
+        options: {
+          starttag: '<!-- bj2html:json -->',
+          endtag: '<!-- endbj2html -->',
+          bowerPath: 'test/app/bower.json'
+        },
+        files: {
+          'tmp/index.html': ['test/app/bower.json']
+        }
+      }
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
 })
 ```
 

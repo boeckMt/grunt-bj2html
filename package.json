@@ -2,11 +2,13 @@
   "name": "grunt-bj2html",
   "version": "0.0.1",
   "description": "parse bower.json and update html header",
-  "repository": "https://github.com/boeckMt/myGruntPlugin.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boeckMt/myGruntPlugin.git"
+  },
   "author": {
     "name": "boeckMt",
-    "email": "bbmatdd@gmail.com",
-    "url": ""
+    "email": "bbmatdd@gmail.com"
   },
   "keywords": [
     "gruntplugin"
@@ -27,5 +29,16 @@
   },
   "scripts": {
     "test": "grunt test"
-  }
+  },
+  "gitHead": "44b59883074ff702e128ed451d87175adc821840",
+  "readme": "# bj2html\r\n\r\n> parse bower.json and update html header\r\n\r\ninspired by:\r\n* https://github.com/taptapship/wiredep\r\n* https://github.com/klei/grunt-injector\r\n\r\n## Getting Started\r\nThis plugin requires Grunt.\r\n\r\nIf you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:\r\n\r\n```shell\r\nnpm install bj2html --save-dev\r\n```\r\n\r\nOnce the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:\r\n\r\n```js\r\ngrunt.loadNpmTasks('bj2html');\r\n```\r\n\r\n## The \"bj2html\" task\r\n\r\n### Overview\r\nIn your project's Gruntfile, add a section named `bj2html` to the data object passed into `grunt.initConfig()`.\r\n\r\n```js\r\ngrunt.initConfig({\r\n  bj2html: {\r\n    options: {\r\n      // Task-specific options go here.\r\n    },\r\n    your_target: {\r\n      // Target-specific file lists and/or options go here.\r\n    },\r\n  },\r\n})\r\n```\r\n\r\n### Options\r\n\r\n#### options.separator\r\nType: `String`\r\nDefault value: `',  '`\r\n\r\nA string value that is used to do something with whatever.\r\n\r\n#### options.punctuation\r\nType: `String`\r\nDefault value: `'.'`\r\n\r\nA string value that is used to do something else with whatever else.\r\n\r\n### Usage Examples\r\n\r\n#### Default Options\r\nIn this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`\r\n\r\n```js\r\ngrunt.initConfig({\r\n  bj2html: {\r\n    options: {},\r\n    files: {\r\n      'dest/default_options': ['src/testing', 'src/123'],\r\n    },\r\n  },\r\n})\r\n```\r\n\r\n#### Custom Options\r\nIn this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`\r\n\r\n```js\r\ngrunt.initConfig({\r\n  bj2html: {\r\n    options: {\r\n      separator: ': ',\r\n      punctuation: ' !!!',\r\n    },\r\n    files: {\r\n      'dest/default_options': ['src/testing', 'src/123'],\r\n    },\r\n  },\r\n})\r\n```\r\n\r\n## Contributing\r\nIn lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).\r\n\r\n## Release History\r\n_(Nothing yet)_\r\n\r\n## License\r\nCopyright (c) 2015 boeckMt. Licensed under the MIT license.\r\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/boeckMt/myGruntPlugin/issues"
+  },
+  "homepage": "https://github.com/boeckMt/myGruntPlugin",
+  "_id": "grunt-bj2html@0.0.1",
+  "_shasum": "c3ac192ede84cebfd89121156136cc0d3736e83e",
+  "_from": "..\\..\\..\\..\\..\\..\\AppData\\Local\\Temp\\npm-5480-dc145994\\1429792226770-0.7518391297198832\\44b59883074ff702e128ed451d87175adc821840",
+  "_resolved": "git://github.com/boeckMt/grunt-bj2html.git#44b59883074ff702e128ed451d87175adc821840"
 }

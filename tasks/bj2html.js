@@ -43,12 +43,12 @@ module.exports = function (grunt) {
 
             var bowerData = grunt.file.readJSON(filepath);
             var header = {
-                title: bowerData.title,
-                version: bowerData.version,
-                description: bowerData.description,
-                author: bowerData.authors.join()
+                title: bowerData.title || 'title',
+                version: bowerData.version || 'version',
+                description: bowerData.description || 'description',
+                author: bowerData.authors.join(' and ') || 'authors'
             };
-    
+
             var template = [
               '<title>' + header.title + '</title>',
               '<meta name="title" content="' + header.title + '">',
@@ -84,7 +84,10 @@ module.exports = function (grunt) {
         var obj = filesToInject[i];
         //console.log(obj.src, obj.dest, obj.template)
         //grunt.file.write(obj.path, obj.template);
-        helpers.injectScripts(obj.dest, regex, obj.template);
+        var inject = helpers.injectScripts(obj.dest, regex, obj.template);
+        if(inject == null){
+          grunt.log.warn("can not find any tags!");
+        }
     }
 
 
