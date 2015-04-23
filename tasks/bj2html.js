@@ -26,6 +26,7 @@ module.exports = function (grunt) {
     });
 
     var filesToInject = [];
+    var regex = helpers.getInjectorTagsRegExp(options.starttag, options.endtag);
 
     // Iterate over all specified file groups.
     this.files.forEach(function (file) {
@@ -47,24 +48,28 @@ module.exports = function (grunt) {
                 description: bowerData.description,
                 author: bowerData.authors.join()
             };
-            var template = '<title>' + header.title + '</title>\n' +
-            '<meta name="title" content="' + header.title + '">\n' +
-            '<meta name="version" content="' + header.version + '">\n' +
-            '<meta name="description" content="' + header.description + '">\n' +
-            '<meta name="author" content="' + header.author + '">';
+    
+            var template = [
+              '<title>' + header.title + '</title>',
+              '<meta name="title" content="' + header.title + '">',
+              '<meta name="version" content="' + header.version + '">',
+              '<meta name="description" content="' + header.description + '">',
+              '<meta name="author" content="' + header.author + '">'
+            ]
 
             //get files and templates to inject
             filesToInject.push({src: filepath, dest:destination,  template: template});
-            //console.log(files)
 
             // Clear existing content between injectors
+            /*
             var templateContent = template,
             templateOriginal = templateContent;
 
-            var re = helpers.getInjectorTagsRegExp(options.starttag, options.endtag);
-            templateContent = templateContent.replace(re, function (match, indent, starttag, content, endtag) {
+            templateContent = templateContent.replace(regex, function (match, indent, starttag, content, endtag) {
                 return indent + starttag + options.lineEnding + indent + endtag;
             });
+
+            */
 
             //grunt.file.write(destination, templateContent);
             //injectScripts(destination, options.regex, templateContent)
@@ -79,7 +84,7 @@ module.exports = function (grunt) {
         var obj = filesToInject[i];
         //console.log(obj.src, obj.dest, obj.template)
         //grunt.file.write(obj.path, obj.template);
-        helpers.injectScripts(obj.dest, options.regex, obj.template);
+        helpers.injectScripts(obj.dest, regex, obj.template);
     }
 
 

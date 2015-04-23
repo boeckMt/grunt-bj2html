@@ -48,17 +48,7 @@ module.exports = function (grunt) {
         options: {
           starttag: '<!-- bj2html:json -->',
           endtag: '<!-- endbj2html -->',
-          bowerPath: 'test/app/bower.json',
-          regex: /(([ \t]*)<!--\s*bj2html:*(\S*)\s*-->)(\n|\r|.)*?(<!--\s*endbj2html\s*-->)/gi
-          /*
-          regex:
-          group: /(([ \t]*)<!--\s*bj2html:*(\S*)\s*-->)
-          group: (\n|\r|.)*?
-          group: (<!--\s*endbj2html\s*-->)
-          modifiers: /gi
-
-
-          */
+          bowerPath: 'test/app/bower.json'
         },
         files: {
           'tmp/index.html': ['test/app/bower.json']
