@@ -27,7 +27,6 @@ module.exports = function (grunt) {
 
     var filesToInject = [];
     var regex = helpers.getInjectorTagsRegExp(options.starttag, options.endtag);
-
     // Iterate over all specified file groups.
     this.files.forEach(function (file) {
         var template = options.templateString || file.dest,
@@ -85,7 +84,7 @@ module.exports = function (grunt) {
         //console.log(obj.src, obj.dest, obj.template)
         //grunt.file.write(obj.path, obj.template);
         var inject = helpers.injectScripts(obj.dest, regex, obj.template);
-        if(inject == null){
+        if(inject === null){
           grunt.log.warn("can not find any tags!");
         }
     }

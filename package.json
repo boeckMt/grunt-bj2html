@@ -1,6 +1,6 @@
 {
   "name": "grunt-bj2html",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "parse bower.json and update html header",
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/boeckMt/myGruntPlugin",
   "_id": "grunt-bj2html@0.0.1",
-  "_shasum": "c3ac192ede84cebfd89121156136cc0d3736e83e",
-  "_from": "..\\..\\..\\..\\..\\..\\AppData\\Local\\Temp\\npm-5480-dc145994\\1429792226770-0.7518391297198832\\44b59883074ff702e128ed451d87175adc821840",
-  "_resolved": "git://github.com/boeckMt/grunt-bj2html.git#44b59883074ff702e128ed451d87175adc821840"
+  "_shasum": "42c4e7344220fb47d0e08c0b0beb820c4dfb904c",
+  "_from": "..\\..\\..\\..\\..\\..\\AppData\\Local\\Temp\\npm-5280-453bc812\\1430204535099-0.27063600765541196\\b3af427c10f62576f20849be8640b23a17f7df8d",
+  "_resolved": "git://github.com/boeckMt/grunt-bj2html.git#b3af427c10f62576f20849be8640b23a17f7df8d"
 }
